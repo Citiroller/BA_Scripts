@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import numpy as np
 import matplotlib.pyplot as plt
 from kafe2 import HistFit, HistContainer, Plot, MultiFit
@@ -131,7 +133,7 @@ class Lande:
         _plot.set_keywords('model', [_model_upper_kw, _model_lower_kw])
         _plot.set_keywords('model_density', [_density_upper_kw, _density_lower_kw])
         _plot.plot()
-        plt.gca().set_xlabel(r'$t$ [$\mu$s]')
+        _plot.axes[0]['main'].set_xlabel(r'$t$ [$\mu$s]')
 
 
 if __name__ == '__main__':

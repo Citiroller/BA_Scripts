@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import numpy as np
 import matplotlib.pyplot as plt
 from kafe2 import UnbinnedFit, Plot, ContoursProfiler
