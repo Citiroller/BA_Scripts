@@ -1,17 +1,17 @@
 #!/usr/bin/env python
 """
-This example wants to illustrate when unbinned fits are used and when histogram fits are used
+This example illustrates the difference between unbinned and histogram fits. To achieve this a normal distributed
+dataset is generated. Then the first n elements of this dataset are fitted with an unbinned fit and histogram fits with
+different binning. This procedure is done for multiple values of n
 """
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import norm
 from multiprocessing import Pool
-
-from kafe2 import UnbinnedFit
-from kafe2 import HistContainer, HistFit, HistCostFunction_Chi2
+from kafe2 import UnbinnedFit, HistContainer, HistFit
 
 
-np.random.seed(1009131719)
+np.random.seed(1009131719)  # fix the seed for reproduction
 
 
 def pdf(x, mu=0, sigma=1):
@@ -86,18 +86,18 @@ if __name__ == '__main__':
         index = params['index']
         loc = params['loc']
         title = params['title']
+        # generate plot for the fitted values of mu
         ax = axs[loc, 0]
         ax.errorbar(fitters.steps, result[index, :, 0, 0], yerr=result[index, :, 1, 0], fmt='o')
-        # ax.scatter(fitters.steps, (0-result[index, :, 0, 0])/result[index, :, 1, 0])
         ax.plot(fitters.steps, np.zeros(len(fitters.steps)), 'r--')
         ax.set_ylim(mu_lim[0], mu_lim[1])
         ax.set_title(title+' $\\mu$')
         ax.set_ylabel(r'$\mu$ best fit')
         ax.set_xlabel('Number of Datapoints')
         ax.label_outer()
+        # generate plot for the fitted value of sigma
         ax = axs[loc, 1]
         ax.errorbar(fitters.steps, result[index, :, 0, 1], yerr=result[index, :, 1, 1], fmt='o')
-        # ax.scatter(fitters.steps, (0 - result[index, :, 0, 1]) / result[index, :, 1, 1])
         ax.plot(fitters.steps, np.ones(len(fitters.steps)), 'r--')
         ax.set_ylim(sig_lim[0], sig_lim[1])
         ax.set_title(title+r' $\sigma$')

@@ -1,5 +1,7 @@
 #!/usr/bin/env python
-
+"""
+This script performs an unbinned fit of the myon decay with the first 200 usable datapoints of a given dataset.
+"""
 import numpy as np
 import matplotlib.pyplot as plt
 from kafe2 import UnbinnedFit, Plot, ContoursProfiler
@@ -41,6 +43,7 @@ if __name__ == '__main__':
     # plot the fit results
     plot = Plot(fit)
     plot.plot()  # add with_asymmetric_parameter_errors=True when this is fixed. For the time being see contours
+    plot.axes[0]['main'].set_xlabel(r'$t$ [μs]')  # change the x-axis label
     # create contours
     cpf = ContoursProfiler(fit)
     cpf.plot_profiles_contours_matrix(parameters=['tau', 'fbg'], label_ticks_in_sigma=False)

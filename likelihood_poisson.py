@@ -1,3 +1,8 @@
+#!/usr/bin/env python
+"""
+This script generates a random poisson dataset and performs an unbinned likelihood fit of a poisson distribution on this
+dataset. Finally, the likelihood function under variation of the parameter λ is displayed.
+"""
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.special import factorial

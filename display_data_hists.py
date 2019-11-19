@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-
+"""This script displays histogramms of the decay times for the upper and lower detector for a given dataset of the
+Landé factor experiment."""
 import numpy as np
 import matplotlib.pyplot as plt
 

@@ -1,5 +1,9 @@
 #!/usr/bin/env python
-
+"""
+This script performs a multifit and determines the Landé factor for the Myon on a randomly generated dataset.
+The class DataGenerator generates a dataset according to a given distribution function, the class Lande is used for
+creating and performing the fits.
+"""
 import numpy as np
 import matplotlib.pyplot as plt
 from kafe2 import HistFit, HistContainer, Plot, MultiFit
@@ -133,7 +137,7 @@ class Lande:
         _plot.set_keywords('model', [_model_upper_kw, _model_lower_kw])
         _plot.set_keywords('model_density', [_density_upper_kw, _density_lower_kw])
         _plot.plot()
-        _plot.axes[0]['main'].set_xlabel(r'$t$ [$\mu$s]')
+        _plot.axes[0]['main'].set_xlabel(r'$t$ [μs]')
 
 
 if __name__ == '__main__':
