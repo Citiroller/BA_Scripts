@@ -1,0 +1,3 @@
+[submodule "kafe2"]
+	path = kafe2
+	url = https://github.com/dsavoiu/kafe2
