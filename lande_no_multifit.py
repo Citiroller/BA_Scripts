@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# coding=utf-8
 """
 This script perfoms a single hist fit for a generated dataset of for the upper detector.
 This is for comparing a single hist fit with the MultiFit from lande_factor.py

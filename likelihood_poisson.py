@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# coding=utf-8
 """
 This script generates a random poisson dataset and performs an unbinned likelihood fit of a poisson distribution on this
 dataset. Finally, the likelihood function under variation of the parameter λ is displayed.

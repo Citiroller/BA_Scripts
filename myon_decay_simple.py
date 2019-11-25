@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# coding=utf-8
 """
 This script performs an unbinned fit of the myon decay with the first 200 usable datapoints of a given dataset.
 """

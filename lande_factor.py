@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# coding=utf-8
 """
 This script performs a multifit and determines the Landé factor for the Myon on a randomly generated dataset.
 The class DataGenerator generates a dataset according to a given distribution function, the class Lande is used for

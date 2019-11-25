@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# coding=utf-8
 """
 This script shows different methods for displaying the density of an one dimensional dataset.
 Namely a histogram, the kernel density method and the rug plot

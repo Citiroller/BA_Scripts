@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# coding=utf-8
 """
 This example illustrates the difference between unbinned and histogram fits. To achieve this a normal distributed
 dataset is generated. Then the first n elements of this dataset are fitted with an unbinned fit and histogram fits with
