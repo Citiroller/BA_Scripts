@@ -19,7 +19,7 @@ def perform_fit(gen_pars):
     starting_values = {'omega': 3, 'delta': np.pi, 'a_bar_top': 1e-4, 'a_bar_bot': 1e-4}
     par_limits = {'a_bar_top': (1e-20, 1), 'a_bar_bot': (1e-20, 1)}
     lande.do_fit(starting_values=starting_values, par_limits=par_limits, pre_fit=True)
-    return np.array([lande.fit_multi.parameter_values, lande.fit_multi.parameter_errors])
+    return lande.fit_multi.parameter_values, lande.fit_multi.asymmetric_parameter_errors
 
 
 if __name__ == '__main__':
@@ -41,10 +41,16 @@ if __name__ == '__main__':
                             'delta': delta, 'f_bot': 2e-2}
             # append gen pars to collection
             gen_pars.append([gen_pars_top, gen_pars_bot])
-        fit_results = np.array(p.map(perform_fit, gen_pars))  # perform the fits with multiprocessing
+        fit_results = p.map(perform_fit, gen_pars)  # perform the fits with multiprocessing
+        omega_fitted = []
+        omega_error = []
+        for pars, errs in fit_results:
+            omega_fitted.append(pars[3])
+            omega_error.append(errs[3])
+        omega_error = np.abs(np.swapaxes(omega_error, 0, 1))  # change errors to suite matplotlib style...
         fig, ax = plt.subplots()  # create the matplotlib axis
         x = np.linspace(0, 0.1)
-        ax.errorbar(a_bar, fit_results[:, 0, 3], yerr=fit_results[:, 1, 3], fmt='o', label='Fit Values')
+        ax.errorbar(a_bar, omega_fitted, yerr=omega_error, fmt='o', label='Fit Values')
         ax.plot(x, np.ones_like(x)*omega*1e-6, 'r--', label=r'Expected $\omega$')
         ax.set_ylabel(r'$\omega$ [MHz]')
         ax.set_xlabel(r'Generator value for $\bar{A}_1$')

@@ -137,7 +137,7 @@ class Lande:
         _plot.set_keywords('data', [_data_upper_kw, _data_lower_kw])
         _plot.set_keywords('model', [_model_upper_kw, _model_lower_kw])
         _plot.set_keywords('model_density', [_density_upper_kw, _density_lower_kw])
-        _plot.plot()
+        _plot.plot(with_asymmetric_parameter_errors=True)
         _plot.axes[0]['main'].set_xlabel(r'$t$ [μs]')
 
 
