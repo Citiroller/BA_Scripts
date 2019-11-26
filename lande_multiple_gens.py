@@ -23,28 +23,32 @@ def perform_fit(gen_pars):
 
 
 if __name__ == '__main__':
-    random = np.random.RandomState(18560472)  # fix seed for reproduction
+    random = np.random.RandomState(29560472)  # fix seed for reproduction
     tau = 2.1969811  # mean decay time in micro seconds
     g_ref = 2.0023318418  # lande factor of the myon
     m = physical_constants["muon mass"][0]
     magnetic_fields = np.array([3.5, 5])*1e-3  # magnetic fields in T
     frequencies = g_ref * e * magnetic_fields / (2 * m)
-    a_bar = np.linspace(0.01, 0.1, num=10)
+    a_bar = np.linspace(0.01, 0.1, num=9, endpoint=False)
+    delta = random.rand() * 2 * np.pi  # generate random phase delay in the interval (0, 2*pi)
     p = Pool(processes=4)
     for omega in frequencies:
         gen_pars = []
         for a in a_bar:
-            delta = random.rand()*2*np.pi  # generate random phase delay in the interval (0, 2*pi)
             gen_pars_top = {'tau': tau, 'k_top': 0.8, 'a_bar_top': a/10, 'omega': omega * 1e-6,
                             'delta': delta, 'f_top': 2e-2}
             gen_pars_bot = {'tau': tau, 'k_bot': 0.7, 'a_bar_bot': a, 'omega': omega * 1e-6,
                             'delta': delta, 'f_bot': 2e-2}
+            # append gen pars to collection
             gen_pars.append([gen_pars_top, gen_pars_bot])
-        fit_results = np.array(p.map(perform_fit, gen_pars))
-        fig, ax = plt.subplots()
+        fit_results = np.array(p.map(perform_fit, gen_pars))  # perform the fits with multiprocessing
+        fig, ax = plt.subplots()  # create the matplotlib axis
+        x = np.linspace(0, 0.1)
         ax.errorbar(a_bar, fit_results[:, 0, 3], yerr=fit_results[:, 1, 3], fmt='o', label='Fit Values')
-        ax.plot(a_bar, np.ones_like(a_bar)*omega*1e-6, 'r--', label=r'Expected $\omega$')
+        ax.plot(x, np.ones_like(x)*omega*1e-6, 'r--', label=r'Expected $\omega$')
         ax.set_ylabel(r'$\omega$ [MHz]')
         ax.set_xlabel(r'Generator value for $\bar{A}_1$')
-        ax.legend()
-        plt.show()
+        ax.legend(loc='lower right')
+        ax.set_xlim(np.amin(x), np.amax(x))
+        plt.tight_layout()
+    plt.show()  # show the plot
