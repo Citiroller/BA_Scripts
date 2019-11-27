@@ -1,5 +1,7 @@
 # Likelihood fits for the advanced physics laboratory courses at the KIT
 
+[![DOI](https://zenodo.org/badge/222707230.svg)](https://zenodo.org/badge/latestdoi/222707230)
+
 This repository provides the python scripts used in the bachelor thesis
 *Likelihood fits for the advanced physics laboratory courses at the KIT*.
 
