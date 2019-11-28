@@ -34,7 +34,7 @@ if __name__ == '__main__':
     fit.set_parameter_values(**starting_values)
     par_names = {'x': 't', 'tau': r'\tau', 'omega': r'\omega', 'delta': r'\delta',
                  'k_top': r'K_0', 'a_bar_top': r'\bar{A}_0', 'f_top': 'f_0'}
-    fit.assign_model_function_latex_name("N_0")
+    fit.assign_model_function_latex_name("F_0")
     fit.assign_model_function_latex_expression(r'{k_top}\cdot\exp{{\left(-\frac{x}{tau}\right)}}'
                                                r'\left(1+{a_bar_top}\cdot\cos\left({omega}{x}+{delta}\right)\right)'
                                                r'+{f_top}')

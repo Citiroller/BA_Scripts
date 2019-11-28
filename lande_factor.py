@@ -96,13 +96,13 @@ class Lande:
         bot_par_names = {'k_bot': r'K_1', 'a_bar_bot': r'\bar{A}_1', 'f_bot': 'f_1'}
         top_par_names.update(shared_par_dict)
         bot_par_names.update(shared_par_dict)
-        _fit_top.assign_model_function_latex_name("N_0")
+        _fit_top.assign_model_function_latex_name("F_0")
         _fit_top.assign_parameter_latex_names(**top_par_names)
         _fit_top._model_function._formatter._latex_x_name = '{t}'  # workaround, because it's currently hardcoded
         _fit_top.assign_model_function_latex_expression(r'{k_top}\cdot\exp{{\left(-\frac{x}{tau}\right)}}'
                                                         r'\left(1+{a_bar_top}\cdot\cos\left({omega}{x}+{delta}\right)\right)'
                                                         r'+{f_top}')
-        _fit_bot.assign_model_function_latex_name("N_1")
+        _fit_bot.assign_model_function_latex_name("F_1")
         _fit_bot.assign_parameter_latex_names(**bot_par_names)
         _fit_bot._model_function._formatter._latex_x_name = '{t}'  # workaround, because it's currently hardcoded
         _fit_bot.assign_model_function_latex_expression(r'{k_bot}\cdot\exp{{\left(-\frac{x}{tau}\right)}}'
