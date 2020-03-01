@@ -7,7 +7,8 @@ dataset. Finally, the likelihood function under variation of the parameter λ is
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.special import factorial
-from kafe2 import UnbinnedFit, ContoursProfiler
+# use the kafe2 version supplied from the git submodule, not the system installation to maintain compatibility
+from kafe2.kafe2 import UnbinnedFit, ContoursProfiler
 
 LOW, HIGH = 0, 20  # limits for generating data
 P = 4  # parameter of poisson distribution for generating data
@@ -19,19 +20,19 @@ def poisson(x, p):
 
 
 def gen_data(length=100):
-    data = []
-    while len(data) < length:
+    _data = []
+    while len(_data) < length:
         x = np.random.randint(LOW, HIGH)
         y = np.random.rand()
         if y <= poisson(x, P):
-            data.append(x)
-    print("Mean of data is {:3.2f}".format(np.mean(data)))
-    return data
+            _data.append(x)
+    print("Mean of data is {:3.2f}".format(np.mean(_data)))
+    return _data
 
 
 if __name__ == "__main__":
-    x = gen_data(200)
-    fit = UnbinnedFit(x, poisson)
+    data = gen_data(200)
+    fit = UnbinnedFit(data, poisson)
     fit.assign_parameter_latex_names(p=r'\lambda')
     fit.do_fit()
     fit.report(asymmetric_parameter_errors=True)

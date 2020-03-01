@@ -1,0 +1,6 @@
+six
+numpy
+scipy
+matplotlib
+iminuit  # required since the used kafe2 version has a bug with unbinned fits and scipy
+seaborn

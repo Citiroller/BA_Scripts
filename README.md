@@ -14,8 +14,10 @@ data from the physics laboratory course
 
 
 ## Getting started
-The fits are done with the [pre-release version 0.1.0 of kafe2](https://github.com/dsavoiu/kafe2/releases/tag/0.1.0).
-This version is included as a git submodule in this repository. Please download it and run `pip install .` when inside the kafe2 directory.
+The fits are done with the kafe2 version supplied as a git submodule.
+Please run `git submodule init` and `git submodule update` in order to run the scripts.
+This will initialize and download the kafe2 version the scripts were built and tested against.
+The scripts will use the locally supplied kafe2 version. There is no need to install kafe2 system wide.
 
-Most of the scripts require the iminuit minimizer to be installed. This minimizer isn't installed with kafe.
+Most of the scripts require the iminuit minimizer to be installed.
 Please run `pip install iminuit` before running the scripts.

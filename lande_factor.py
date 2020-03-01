@@ -7,7 +7,8 @@ creating and performing the fits.
 """
 import numpy as np
 import matplotlib.pyplot as plt
-from kafe2 import HistFit, HistContainer, Plot, MultiFit
+# use the kafe2 version supplied from the git submodule, not the system installation to maintain compatibility
+from kafe2.kafe2 import HistFit, HistContainer, Plot, MultiFit
 from six import iteritems
 
 
@@ -148,7 +149,7 @@ if __name__ == '__main__':
     b = 5e-3  # magnetic field in T
     m = physical_constants["muon mass"][0]
     omega_ref = g_ref * e * b / (2 * m)
-    print("Expected omega ist {}".format(omega_ref))
+    print("Expected omega is {}".format(omega_ref))
     delta = 9.85  # phase delay
     gen_pars_top = {'tau': tau_ref * 1e6, 'k_top': 0.8, 'a_bar_top': 0.00125, 'omega': omega_ref * 1e-6, 'delta': delta,
                     'f_top': 2e-2}
