@@ -46,30 +46,30 @@ class Fitters:
             return np.linspace(low, high, num=size, dtype=int)-1
 
     def do_unbinned(self, step):
-        data = self.data[0:step]
-        fit = UnbinnedFit(data, model_density_function=pdf, minimizer=self.minimizer)
-        fit.do_fit()
-        params = fit.parameter_values
-        errors = fit.parameter_errors
-        return [params, errors]
+        _data = self.data[0:step]
+        _fit = UnbinnedFit(_data, model_density_function=pdf, minimizer=self.minimizer)
+        _fit.do_fit()
+        _params = _fit.parameter_values
+        _errors = _fit.parameter_errors
+        return [_params, _errors]
 
     def do_hist(self, step):
-        hist_cont = HistContainer(n_bins=self.n_bins, bin_range=self.borders, fill_data=self.data[0:step])
-        hist_fit = HistFit(hist_cont, model_density_function=pdf, model_density_antiderivative=cdf,
-                           minimizer=self.minimizer)
-        #                   cost_function=HistCostFunction_Chi2(errors_to_use=None))
-        hist_fit.do_fit()
-        params = hist_fit.parameter_values
-        errors = hist_fit.parameter_errors
-        return [params, errors]
+        _hist_cont = HistContainer(n_bins=self.n_bins, bin_range=self.borders, fill_data=self.data[0:step])
+        _hist_fit = HistFit(_hist_cont, model_density_function=pdf, model_density_antiderivative=cdf,
+                            minimizer=self.minimizer)
+                            # cost_function=HistCostFunction_Chi2(errors_to_use=None))
+        _hist_fit.do_fit()
+        _params = _hist_fit.parameter_values
+        _errors = _hist_fit.parameter_errors
+        return [_params, _errors]
 
     def do_fits(self):
-        p = Pool(processes=10)
-        _result = [p.map(self.do_unbinned, [i for i in self.steps])]
-        for n in [3, 6, 10, 50]:
-            p = Pool(processes=10)
-            self.n_bins = n
-            _result.append(p.map(self.do_hist, [i for i in self.steps]))
+        _result = []
+        with Pool(processes=10) as p:
+            _result.append(p.map(self.do_unbinned, [i for i in self.steps]))
+            for n in [3, 6, 10, 50]:
+                self.n_bins = n
+                _result.append(p.map(self.do_hist, [i for i in self.steps]))
         return np.array(_result)
 
 
@@ -81,7 +81,7 @@ if __name__ == '__main__':
     helper_dict = {3: {'index': 1, 'loc': 0, 'title': '3 Bins'}, 6: {'index': 2, 'loc': 1, 'title': '6 Bins'},
                    10: {'index': 3, 'loc': 2, 'title': '10 Bins'}, 50: {'index': 4, 'loc': 3, 'title': '50 Bins'},
                    0: {'index': 0, 'loc': 4, 'title': 'Unbinned'}}
-    fig, axs = plt.subplots(nrows=5, ncols=2, sharex=True)
+    fig, axs = plt.subplots(nrows=5, ncols=2, sharex='col')
     fig.set_size_inches(8.26, 11.7)
     fig.set_dpi(300)
     for key, params in helper_dict.items():
@@ -93,6 +93,7 @@ if __name__ == '__main__':
         ax.errorbar(fitters.steps, result[index, :, 0, 0], yerr=result[index, :, 1, 0], fmt='o')
         ax.plot(fitters.steps, np.zeros(len(fitters.steps)), 'r--')
         ax.set_ylim(mu_lim[0], mu_lim[1])
+        ax.set_xscale('log')
         ax.set_title(title+' $\\mu$')
         ax.set_ylabel(r'$\mu$ best fit')
         ax.set_xlabel('Number of Datapoints')
@@ -104,7 +105,7 @@ if __name__ == '__main__':
         ax.set_ylim(sig_lim[0], sig_lim[1])
         ax.set_title(title+r' $\sigma$')
         ax.set_ylabel(r'$\sigma$ best fit')
-    plt.xscale('log')
+        ax.set_xscale('log')
     plt.xlabel('Number of Datapoints')
     plt.tight_layout()
     plt.savefig('UnbinnedBinned.png')

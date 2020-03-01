@@ -31,7 +31,6 @@ if __name__ == '__main__':
     frequencies = g_ref * e * magnetic_fields / (2 * m)
     a_bar = np.linspace(0.01, 0.1, num=9, endpoint=False)
     delta = random.rand() * 2 * np.pi  # generate random phase delay in the interval (0, 2*pi)
-    p = Pool(processes=4)
     for omega in frequencies:
         gen_pars = []
         for a in a_bar:
@@ -41,7 +40,8 @@ if __name__ == '__main__':
                             'delta': delta, 'f_bot': 2e-2}
             # append gen pars to collection
             gen_pars.append([gen_pars_top, gen_pars_bot])
-        fit_results = p.map(perform_fit, gen_pars)  # perform the fits with multiprocessing
+        with Pool(processes=4) as p:
+            fit_results = p.map(perform_fit, gen_pars)  # perform the fits with multiprocessing
         omega_fitted = []
         omega_error = []
         for pars, errs in fit_results:

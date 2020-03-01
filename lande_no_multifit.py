@@ -47,7 +47,5 @@ if __name__ == '__main__':
     fit.report()
     plot = Plot(fit)
     plot.set_keywords('data', [dict(markersize=3)])
-    # plot.set_keywords('model', [dict(label='Upper Model')])
-    # plot.set_keywords('model_density', [dict(label='Upper Model Density')])
     plot.plot()
     plt.show()
