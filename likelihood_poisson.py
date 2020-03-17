@@ -8,7 +8,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.special import factorial
 # use the kafe2 version supplied from the git submodule, not the system installation to maintain compatibility
-from .kafe2.kafe2 import UnbinnedFit, ContoursProfiler
+from kafe2.kafe2 import UnbinnedFit, ContoursProfiler
 
 LOW, HIGH = 0, 20  # limits for generating data
 P = 4  # parameter of poisson distribution for generating data

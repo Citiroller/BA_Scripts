@@ -8,7 +8,7 @@ creating and performing the fits.
 import numpy as np
 import matplotlib.pyplot as plt
 # use the kafe2 version supplied from the git submodule, not the system installation to maintain compatibility
-from .kafe2.kafe2 import HistFit, HistContainer, Plot, MultiFit
+from kafe2.kafe2 import HistFit, HistContainer, Plot, MultiFit
 from six import iteritems
 
 
