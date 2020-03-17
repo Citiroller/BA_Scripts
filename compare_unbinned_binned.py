@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 from scipy.stats import norm
 from multiprocessing import Pool
 # use the kafe2 version supplied from the git submodule, not the system installation to maintain compatibility
-from kafe2.kafe2 import UnbinnedFit, HistContainer, HistFit
+from .kafe2.kafe2 import UnbinnedFit, HistContainer, HistFit
 
 
 np.random.seed(1009131719)  # fix the seed for reproduction

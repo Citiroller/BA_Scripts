@@ -6,7 +6,7 @@ This script performs an unbinned fit of the myon decay with the first 200 usable
 import numpy as np
 import matplotlib.pyplot as plt
 # use the kafe2 version supplied from the git submodule, not the system installation to maintain compatibility
-from kafe2.kafe2 import UnbinnedFit, Plot, ContoursProfiler
+from .kafe2.kafe2 import UnbinnedFit, Plot, ContoursProfiler
 
 
 def simple_decay(t, tau=2.2, fbg=0.1, a=1., b=9.75):

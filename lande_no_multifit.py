@@ -7,7 +7,7 @@ This is for comparing a single hist fit with the MultiFit from lande_factor.py
 import numpy as np
 import matplotlib.pyplot as plt
 # use the kafe2 version supplied from the git submodule, not the system installation to maintain compatibility
-from kafe2.kafe2 import HistContainer, HistFit, Plot
+from .kafe2.kafe2 import HistContainer, HistFit, Plot
 from lande_factor import DataGenerator, events_top, decay_top
 
 
