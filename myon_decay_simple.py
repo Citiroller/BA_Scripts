@@ -52,7 +52,7 @@ if __name__ == '__main__':
 
     # plot the fit results
     plot = Plot(fit)
-    plot.plot(with_asymmetric_parameter_errors=True)
+    plot.plot(asymmetric_parameter_errors=True)
 
     # create contours
     cpf = ContoursProfiler(fit)
