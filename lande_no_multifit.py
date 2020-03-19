@@ -20,7 +20,7 @@ if __name__ == '__main__':
     omega_ref = g_ref * e * b / (2 * m)
     print("Expected omega is {}".format(omega_ref))
     delta = 9.85  # phase delay
-    gen_pars_top = {'tau': tau_ref * 1e6, 'k_top': 0.8, 'a_bar_top': 0.00125, 'omega': omega_ref * 1e-6, 'delta': delta,
+    gen_pars_top = {'tau': tau_ref * 1e6, 'k_top': 0.8, 'a_bar_top': 0.0025, 'omega': omega_ref * 1e-6, 'delta': delta,
                     'f_top': 2e-2}
     limits = (2, 13)
     gen = DataGenerator(events_top, limits=limits, size=int(1e6), **gen_pars_top)
@@ -33,7 +33,7 @@ if __name__ == '__main__':
     # final hist fit
     fit = HistFit(data, events_top, cost_function='nllr', minimizer='iminuit')
     fit.model_label = "Upper Model"
-    starting_values = {'omega': 3, 'delta': np.pi, 'a_bar_top': 1e-4}
+    starting_values = {'omega': 3, 'delta': np.pi, 'a_bar_top': 1e-3}
     starting_values.update(pre_fit.parameter_name_value_dict)
     fit.set_parameter_values(**starting_values)
     par_names = {'x': 't', 'tau': r'\tau', 'omega': r'\omega', 'delta': r'\delta',

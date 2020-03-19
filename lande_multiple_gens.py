@@ -14,7 +14,7 @@ def perform_fit(gen_pars):
     pars_bot = gen_pars[1]
     top_gen = DataGenerator(events_top, limits, size=int(1e6), **pars_top)
     bot_gen = DataGenerator(events_bot, limits, size=int(4e5), **pars_bot)
-    data = np.array([top_gen.gen_data(), bot_gen.gen_data()])
+    data = np.array([top_gen.gen_data(rand_seed=1234), bot_gen.gen_data(rand_seed=1234)])
     lande = Lande(data, limits)
     starting_values = {'omega': 3, 'delta': np.pi, 'a_bar_top': 1e-4, 'a_bar_bot': 1e-4}
     par_limits = {'a_bar_top': (1e-20, 1), 'a_bar_bot': (1e-20, 1)}
@@ -48,13 +48,14 @@ if __name__ == '__main__':
             omega_fitted.append(pars[3])
             omega_error.append(errs[3])
         omega_error = np.abs(np.swapaxes(omega_error, 0, 1))  # change errors to suite matplotlib style...
-        fig, ax = plt.subplots()  # create the matplotlib axis
+        fig, ax = plt.subplots(figsize=(12, 6))  # create the matplotlib axis
         x = np.linspace(0, 0.1)
         ax.errorbar(a_bar, omega_fitted, yerr=omega_error, fmt='o', label='Fit Values')
         ax.plot(x, np.ones_like(x)*omega*1e-6, 'r--', label=r'Expected $\omega$')
         ax.set_ylabel(r'$\omega$ [MHz]')
         ax.set_xlabel(r'Generator value for $\bar{A}_1$')
-        ax.legend(loc='lower right')
         ax.set_xlim(np.amin(x), np.amax(x))
+        ax.set_ylim((omega*1e-6)-0.4, (omega*1e-6)+0.4)
+        ax.legend(loc='best')
         plt.tight_layout()
     plt.show()  # show the plot

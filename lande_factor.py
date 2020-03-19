@@ -136,7 +136,7 @@ class Lande:
         _plot.set_keywords('data', [_data_upper_kw, _data_lower_kw])
         _plot.set_keywords('model', [_model_upper_kw, _model_lower_kw])
         _plot.set_keywords('model_density', [_density_upper_kw, _density_lower_kw])
-        _plot.plot(asymmetric_parameter_errors=True)
+        _plot.plot(asymmetric_parameter_errors=False)
         _plot.axes[0]['main'].set_xlabel(r'$t$ [μs]')
 
 
@@ -149,9 +149,9 @@ if __name__ == '__main__':
     omega_ref = g_ref * e * b / (2 * m)
     print("Expected omega is {}".format(omega_ref))
     delta = 9.85  # phase delay
-    gen_pars_top = {'tau': tau_ref * 1e6, 'k_top': 0.8, 'a_bar_top': 0.00125, 'omega': omega_ref * 1e-6, 'delta': delta,
+    gen_pars_top = {'tau': tau_ref * 1e6, 'k_top': 0.8, 'a_bar_top': 0.0025, 'omega': omega_ref * 1e-6, 'delta': delta,
                     'f_top': 2e-2}
-    gen_pars_bot = {'tau': tau_ref * 1e6, 'k_bot': 0.7, 'a_bar_bot': 0.015, 'omega': omega_ref * 1e-6, 'delta': delta,
+    gen_pars_bot = {'tau': tau_ref * 1e6, 'k_bot': 0.7, 'a_bar_bot': 0.03, 'omega': omega_ref * 1e-6, 'delta': delta,
                     'f_bot': 2e-2}
     limits = (2, 13)
 
@@ -162,13 +162,15 @@ if __name__ == '__main__':
 
     print('Performing fit...')
     lande = Lande(data, limits)
-    starting_values = {'omega': 3, 'delta': np.pi, 'a_bar_top': 1e-4, 'a_bar_bot': 1e-4}
+    starting_values = {'omega': 3, 'delta': np.pi, 'a_bar_top': 1e-3, 'a_bar_bot': 1e-2}
     par_limits = {'a_bar_top': (1e-20, 1), 'a_bar_bot': (1e-20, 1)}
     lande.do_fit(starting_values=starting_values, par_limits=par_limits, pre_fit=True)
     print()
     for _par_name, _par_val, _par_err in zip(lande.fit_multi.parameter_names, lande.fit_multi.parameter_values,
                                              lande.fit_multi.parameter_errors):
         print('%s: %.3E +- %.3E' % (_par_name, _par_val, _par_err))
+
+    print('Plotting...')
     lande.plot()
 
     omega = lande.fit_multi.parameter_name_value_dict['omega'] * 1e6
