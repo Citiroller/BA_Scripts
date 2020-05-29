@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 from scipy.stats import norm
 from multiprocessing import Pool
 # use the kafe2 version supplied from the git submodule, not the system installation to maintain compatibility
+# for using the system installation, use from kafe2 import UnbinnedFit, ...
 from kafe2.kafe2 import UnbinnedFit, HistContainer, HistFit
 
 
@@ -65,7 +66,7 @@ class Fitters:
 
     def do_fits(self):
         _result = []
-        with Pool(processes=10) as p:
+        with Pool() as p:
             _result.append(p.map(self.do_unbinned, [i for i in self.steps]))
             for n in [3, 6, 10, 50]:
                 self.n_bins = n
@@ -74,10 +75,11 @@ class Fitters:
 
 
 if __name__ == '__main__':
-    fitters = Fitters(1e4, 4, 1e4, 50)
+    size, low, high, steps = 1e4, 4, 1e4, 50
+    fitters = Fitters(size, low, high, steps)
     result = fitters.do_fits()
-    mu_lim = [-0.25, 0.25]
-    sig_lim = [0.2, 1.1]
+    mu_lim = (-0.25, 0.25)
+    sig_lim = (0.2, 1.1)
     helper_dict = {3: {'index': 1, 'loc': 0, 'title': '3 Bins'}, 6: {'index': 2, 'loc': 1, 'title': '6 Bins'},
                    10: {'index': 3, 'loc': 2, 'title': '10 Bins'}, 50: {'index': 4, 'loc': 3, 'title': '50 Bins'},
                    0: {'index': 0, 'loc': 4, 'title': 'Unbinned'}}
@@ -93,6 +95,7 @@ if __name__ == '__main__':
         ax.errorbar(fitters.steps, result[index, :, 0, 0], yerr=result[index, :, 1, 0], fmt='o')
         ax.plot(fitters.steps, np.zeros(len(fitters.steps)), 'r--')
         ax.set_ylim(mu_lim[0], mu_lim[1])
+        ax.set_xlim(low, high)
         ax.set_xscale('log')
         ax.set_title(title+' $\\mu$')
         ax.set_ylabel(r'$\mu$ best fit')
@@ -103,6 +106,7 @@ if __name__ == '__main__':
         ax.errorbar(fitters.steps, result[index, :, 0, 1], yerr=result[index, :, 1, 1], fmt='o')
         ax.plot(fitters.steps, np.ones(len(fitters.steps)), 'r--')
         ax.set_ylim(sig_lim[0], sig_lim[1])
+        ax.set_xlim(low, high)
         ax.set_title(title+r' $\sigma$')
         ax.set_ylabel(r'$\sigma$ best fit')
         ax.set_xscale('log')

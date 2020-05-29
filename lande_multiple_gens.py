@@ -40,7 +40,7 @@ if __name__ == '__main__':
                             'delta': delta, 'f_bot': 2e-2}
             # append gen pars to collection
             gen_pars.append([gen_pars_top, gen_pars_bot])
-        with Pool(processes=4) as p:
+        with Pool() as p:
             fit_results = p.map(perform_fit, gen_pars)  # perform the fits with multiprocessing
         omega_fitted = []
         omega_error = []

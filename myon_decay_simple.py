@@ -26,16 +26,16 @@ def simple_decay(t, tau=2.2, fbg=0.1, a=1., b=9.75):
 
 if __name__ == '__main__':
     data = np.loadtxt("dpFilt_190325-0148.dat", delimiter=',')[:, 2]  # just load double pulses
-    limits = (2, 15)
+    low, high = 2, 15
     # only use delta t in between the limits, to avoid underground
-    data = data[(data >= limits[0]) & (data <= limits[1])]
+    data = data[(data >= low) & (data <= high)]
     # create the fit object, currently the iminuit minimizer is required due to a bug with the scipy minimizer
     fit = UnbinnedFit(data[0:200], simple_decay, minimizer='iminuit')  # only use first 200 events
     # fix the parameters for normalizing the distribution function
-    fit.fix_parameter('a', limits[0])
-    fit.fix_parameter('b', limits[1])
+    fit.fix_parameter('a', low)
+    fit.fix_parameter('b', high)
     # set the background to physically logical values
-    fit.limit_parameter('fbg', (0, 1))
+    fit.limit_parameter('fbg', 0, 1)
     # set labels
     fit.data_container.label = "lifetime measurements"
     fit.data_container.axis_labels = ['life time ' r'$\tau$' '(µs)', 'Density']
@@ -48,7 +48,7 @@ if __name__ == '__main__':
                                                "+ {fbg} \\frac{{1}}{{{b}-{a}}}")
     # do the fit
     fit.do_fit()
-    fit.report()
+    fit.report(asymmetric_parameter_errors=True)
 
     # plot the fit results
     plot = Plot(fit)

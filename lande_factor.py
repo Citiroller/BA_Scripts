@@ -120,8 +120,9 @@ class Lande:
             starting_values.update(self.decay_fit_multi.parameter_name_value_dict)
         print('Final Fit starting values are:', starting_values)
         self.fit_multi.set_parameter_values(**starting_values)
-        for key, value in iteritems(par_limits):
-            self.fit_multi.limit_parameter(key, value)
+        for key, limits in iteritems(par_limits):
+            low, high = limits
+            self.fit_multi.limit_parameter(key, low, high)
         self.fit_multi.do_fit()
         # self.fit_multi.report()
 
