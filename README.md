@@ -7,9 +7,9 @@ This repository provides the python scripts used in the bachelor thesis
 
 The Bachelor Thesis focuses on implementing Unbinned Likelihood-Fits in the software tool
 [kafe2](https://github.com/dsavoiu/kafe2).
-This fitting method and the Binned Likelihood-Fits are used in conjunction with the Multifit in kafe2 for analysing
+This fitting method and the Binned Likelihood-Fits are used in conjunction with the multifit in kafe2 for analysing
 data from the physics laboratory course
-*determing the Landé-factor of the myon*.
+*determining the Landé-factor of the myon*.
 
 
 
